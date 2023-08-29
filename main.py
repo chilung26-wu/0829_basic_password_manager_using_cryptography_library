@@ -20,8 +20,8 @@ class PasswordManager:
     def save_credentials(self, filename, credentials):
         encrypted_credentials = {}
         for key, value in credentials.items():
-            encrypted_key = self.encrypt(key)  # 對帳號進行加密
-            encrypted_value = self.encrypt(value)  # 對密碼進行加密
+            encrypted_key = self.encrypt(key).decode()  # 對帳號進行加密
+            encrypted_value = self.encrypt(value).decode()  # 對密碼進行加密
             encrypted_credentials[encrypted_key] = encrypted_value
 
         # 將加密後的資料儲存到檔案中
@@ -35,8 +35,8 @@ class PasswordManager:
 
         credentials = {}
         for encrypted_key, encrypted_value in encrypted_credentials.items():
-            key = self.decrypt(encrypted_key)  # 解密帳號
-            value = self.decrypt(encrypted_value)  # 解密密碼
+            key = self.decrypt(encrypted_key.encode()) # 解密帳號
+            value = self.decrypt(encrypted_value.encode())  # 解密密碼
             credentials[key] = value
 
         return credentials
